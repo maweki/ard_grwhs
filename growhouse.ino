@@ -28,8 +28,8 @@ Environment readEnvironment() {
 #define RULECOUNT 2
 Rule rules[] = {
 //{ {minHum, maxHum}, {minTemp, maxTemp}, { led1 } }
-  { {0,   50}, {0,100}, { Logic::False() } },
-  { {60, 100}, {0,100}, { Logic::True() } }
+  { {0,   70}, {0,100}, { Logic::False() } },
+  { {75, 100}, {0,100}, { Logic::True() } }
 };
 
 // Functional Rules
