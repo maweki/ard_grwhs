@@ -50,6 +50,8 @@ void setup()
     digitalWrite(13, LOW);
 }
 
+byte cnt = 0;
+
 void loop()
 {
     //Read data and store it to variables hum and temp
@@ -66,11 +68,10 @@ void loop()
 
 
     //Print temp and humidity values to serial monitor
-    Serial.print("Humidity: ");
-    Serial.print(env.humidity);
-    Serial.print(" %, Temp: ");
-    Serial.print(env.temperature);
-    Serial.println(" Celsius"); 
-    
-    delay(2000); //Delay 2 sec.
+    if (cnt++ >= 10) {
+      cnt = 0;
+      Serial.print(jsonEnv(env));
+    }
+
+    delay(1000); //Delay 1 sec.
 }
