@@ -1,11 +1,13 @@
 struct Environment {
   float humidity;
   float temperature;
+  bool led1;
 };
 
 String jsonEnv(Environment env) {
   return String("{ \"hum\": ") + String(env.humidity) +
          String(", \"tmp\": ") + String(env.temperature) +
+         String(", \"led\": ") + String(env.led1) +
          String(" }");
 };
 
@@ -64,6 +66,7 @@ Action EmptyAction() {
 struct Rule {
   RangeFloat rangeHumidity;
   RangeFloat rangeTemperature;
+  Logic led1;
   Action action;
 };
 
@@ -71,7 +74,9 @@ Action ruleApplies(Environment env, Rule rule) {
   if (env.humidity >= rule.rangeHumidity.min and
       env.humidity <= rule.rangeHumidity.max and
       env.temperature >= rule.rangeTemperature.min and
-      env.temperature <= rule.rangeTemperature.max)
+      env.temperature <= rule.rangeTemperature.max and
+      rule.led1.Get(env.led1) == env.led1
+    )
   { return rule.action; }
   return EmptyAction();
 }

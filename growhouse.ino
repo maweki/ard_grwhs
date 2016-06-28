@@ -16,20 +16,24 @@ DHT dht(DHTPIN, DHTTYPE);
 // Functions
 Environment readEnvironment();
 
+// internal (non-sensor) state
+bool led1;
 
 Environment readEnvironment() {
-  return {
+  return (Environment){
     dht.readHumidity(),
-    dht.readTemperature()
+    dht.readTemperature(),
+    led1
   };
 }
 
 // Declarative Rules
 #define RULECOUNT 2
 Rule rules[] = {
-//{ {minHum, maxHum}, {minTemp, maxTemp}, { led1 } }
-  { {0,   70}, {0,100}, { Logic::False() } },
-  { {75, 100}, {0,100}, { Logic::True() } }
+// ======== PRECONDITIONS ================== / POSTCONDITIONS
+//{ {minHum, maxHum}, {minTemp, maxTemp}, led1, { led1 } }
+  { {0,   70}, {0,100}, Logic::DontCare(), { Logic::False() } },
+  { {75, 100}, {0,100}, Logic::DontCare(), { Logic::True() } }
 };
 
 // Functional Rules
