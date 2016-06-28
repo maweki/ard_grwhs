@@ -24,12 +24,18 @@ Environment readEnvironment() {
   };
 }
 
+// Declarative Rules
 #define RULECOUNT 2
 Rule rules[] = {
 //{ {minHum, maxHum}, {minTemp, maxTemp}, { led1 } }
   { {0,   50}, {0,100}, { Logic::False() } },
   { {60, 100}, {0,100}, { Logic::True() } }
 };
+
+// Functional Rules
+Action functionalRuleStub(Environment env) {
+  return EmptyAction();
+}
 
 void setup()
 {
@@ -53,6 +59,7 @@ void loop()
     for (byte i = 0; i < RULECOUNT; i++) {
        act = AddActions(act, ruleApplies(env, rules[i]));
     }
+    act = AddActions(act, functionalRuleStub(env));
 
     if (act.led1.isTrue()) { digitalWrite(13, HIGH); }
     if (act.led1.isFalse()) { digitalWrite(13, LOW); }
