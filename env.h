@@ -3,6 +3,12 @@ struct Environment {
   float temperature;
 };
 
+String jsonEnv(Environment env) {
+  return String("{ \"hum\": ") + String(env.humidity) +
+         String(", \"tmp\": ") + String(env.temperature) +
+         String(" }");
+};
+
 struct RangeFloat {
   float min;
   float max;
