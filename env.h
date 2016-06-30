@@ -27,18 +27,18 @@ private:
 public:
     static Logic True() { Logic a; a = Logic(); a.state = 1; return a; };
     bool isTrue() { return state == 1; };
-    
+
     static Logic False() { Logic a; a = Logic(); a.state = 0; return a; };
     bool isFalse() { return state == 0; };
-    
+
     static Logic DontCare() { Logic a; a = Logic(); a.state = 2; return a; };
     bool isDontCare() { return state == 2; };
-    
+
     Logic And(Logic other) {
       if (other.isFalse() or isDontCare()) { return other; }
       return *this;
     };
-    
+
     bool Get(bool def) {
       if (isDontCare())  { return def; }
       return isTrue();
@@ -60,7 +60,7 @@ Action AddActions(Action a, Action b) {
 };
 
 Action EmptyAction() {
-  return { Logic::DontCare()/*, Logic::DontCare(), Logic::DontCare()*/ }; 
+  return { Logic::DontCare()/*, Logic::DontCare(), Logic::DontCare()*/ };
 }
 
 struct Rule {
