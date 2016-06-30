@@ -61,18 +61,28 @@ void loop()
     //Read data and store it to variables hum and temp
     Environment env = readEnvironment();
     Action act = EmptyAction();
-    
+
+    // Declarative rules
     for (byte i = 0; i < RULECOUNT; i++) {
        act = AddActions(act, ruleApplies(env, rules[i]));
     }
+    // Functional rules
     act = AddActions(act, functionalRuleStub(env));
 
-    if (act.led1.isTrue()) { digitalWrite(13, HIGH); }
-    if (act.led1.isFalse()) { digitalWrite(13, LOW); }
+    // synchronize/execute Actions
+    // Should be at least True/False for every Action
+    if (act.led1.isTrue()) {
+      digitalWrite(13, HIGH);
+      led1 = true;
+    }
+    if (act.led1.isFalse()) {
+      digitalWrite(13, LOW);
+      led1 = false;
+    }
 
 
-    //Print temp and humidity values to serial monitor
-    if (cnt++ >= 10) {
+    //Print Environment to serial monitor twice a minute
+    if (cnt++ >= 30) {
       cnt = 0;
       Serial.print(jsonEnv(env));
     }
